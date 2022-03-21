@@ -119,7 +119,7 @@ namespace Exchange_API.Controllers
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.User.ToListAsync());
+            return Ok(user);
         }
     }
 }
