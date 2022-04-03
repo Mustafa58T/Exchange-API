@@ -8,5 +8,6 @@ namespace Exchange_API.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<User> User { get; set; }
+        public DbSet<Product> Product { get; set; }
     }
 }

@@ -121,5 +121,27 @@ namespace Exchange_API.Controllers
 
             return Ok(user);
         }
+
+        [AllowAnonymous]
+        [HttpGet("product")]
+
+        public async Task<ActionResult<List<ProductRequestDto>>> GetProducts()
+        {
+
+            var Product = await _context.Product.ToListAsync();
+            return Ok(Product);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("productdetail/{id}")]
+
+
+        public async Task<ActionResult<List<ProductRequestDto>>> Product(int id)
+        {
+
+            var Product = await _context.Product.FindAsync(id);
+            return Ok(Product);
+        }
+     
     }
 }
