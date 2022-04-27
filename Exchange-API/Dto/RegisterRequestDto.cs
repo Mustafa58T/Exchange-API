@@ -5,7 +5,7 @@ namespace Exchange_API.Dto
     public class RegisterRequestDto
     {
 
-        public int ID { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Swaps { get; set; }

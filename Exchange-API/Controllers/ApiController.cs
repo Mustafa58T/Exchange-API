@@ -44,7 +44,7 @@ namespace Exchange_API.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, findedUSer.ID.ToString())
+                    new Claim(ClaimTypes.Name, findedUSer.UserId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -58,10 +58,7 @@ namespace Exchange_API.Controllers
                 Jwt = token,
                 User = findedUSer,
             });
-
-
         }
-
 
         [HttpGet("user/me")]
         public async Task<ActionResult<string>> Me()
@@ -78,7 +75,7 @@ namespace Exchange_API.Controllers
         [HttpPut("user/update")]
         public async Task<ActionResult<List<User>>> UpdateUser(User user)
         {
-            var dbUser = await _context.User.FindAsync(user.ID);
+            var dbUser = await _context.User.FindAsync(user.UserId);
             if (dbUser == null)
                 return BadRequest("User not found.");
 
@@ -142,6 +139,16 @@ namespace Exchange_API.Controllers
             var Product = await _context.Product.FindAsync(id);
             return Ok(Product);
         }
-     
+
+
+        [AllowAnonymous]
+        [HttpGet("productimage/{id}")]
+        public async Task<ActionResult<List<ProductImageRequestDto>>> ProductImages(int id)
+        {
+
+            var ProductImage = await _context.ProductImage.FindAsync(id);
+            return Ok(ProductImage);
+        }
+
     }
 }
