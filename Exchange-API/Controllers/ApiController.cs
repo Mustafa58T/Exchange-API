@@ -145,10 +145,48 @@ namespace Exchange_API.Controllers
         [HttpGet("productimage/{id}")]
         public async Task<ActionResult<List<ProductImageRequestDto>>> ProductImages(int id)
         {
+            var list = _context.ProductImage.Where(
+                x => x.ProductId == id)
+                .ToList();
 
-            var ProductImage = await _context.ProductImage.FindAsync(id);
-            return Ok(ProductImage);
+            //var ProductId = await _context.ProductImage.FindAsync(id);
+            return Ok(list);
         }
 
+
+        [AllowAnonymous]
+        [HttpGet("productcomment/{id}")]
+        public async Task<ActionResult<List<CommentRequestDto>>> ProductComment(int id)
+        {
+
+            var list = _context.Comment.Where(
+                x => x.ProductId == id)
+                .ToList();
+
+            return Ok(list);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("productcommentI/{id}")]
+        public async Task<ActionResult<List<CommentRequestDto>>> ProductCommentI(int id,CommentRequestDto body)
+        {
+
+            var comment = new Comment()
+            {
+                CommentId = body.CommentId,
+                UserId = body.UserId,
+                FirstName = body.FirstName,
+                LastName = body.LastName,
+                ProductId = id,
+                Comments = body.Comments,
+                CommentDate = body.CommentDate,
+                CommentImage = body.CommentImage,
+            };
+            _context.Comment.Add(comment);
+            await _context.SaveChangesAsync();
+
+            return Ok(comment);
+        }
     }
 }
+

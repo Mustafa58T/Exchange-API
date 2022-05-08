@@ -10,6 +10,7 @@
         public string ProductPrefence { get; set; }
         public string ProductTitle { get; set; }
         public string ProductLocation { get; set; }
+        public string ProductImage { get; set; }
 
     }
 }
