@@ -173,7 +173,6 @@ namespace Exchange_API.Controllers
 
             var comment = new Comment()
             {
-                CommentId = body.CommentId,
                 UserId = body.UserId,
                 FirstName = body.FirstName,
                 LastName = body.LastName,
