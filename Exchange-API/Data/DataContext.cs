@@ -11,5 +11,6 @@ namespace Exchange_API.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductImage> ProductImage { get; set; }
         public DbSet<Comment> Comment { get; set; }
+        public DbSet<Fav> Fav { get; set; }
     }
 }

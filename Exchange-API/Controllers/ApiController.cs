@@ -130,6 +130,32 @@ namespace Exchange_API.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("productfav/{userid}")]
+
+        public async Task<ActionResult<List<Fav>>> GetFavProducts(int userid)
+        {
+
+            var list= _context.Fav
+                .Where(x => x.UserId == userid)
+                .ToList();
+            
+            if (list != null)
+            {
+                var productList =  _context.Product.Where(x => x.UserId == userid)
+                .ToList();
+
+                return Ok(productList);
+                
+            }
+            else
+            {
+                var product = "";
+                return Ok(product);
+                
+            }
+
+        }
+        [AllowAnonymous]
         [HttpGet("productdetail/{id}")]
 
 
@@ -186,6 +212,57 @@ namespace Exchange_API.Controllers
 
             return Ok(comment);
         }
+
+
+        [AllowAnonymous]
+        [HttpGet("favorite/{userid}/{productId}")]
+        public async Task<ActionResult<List<Fav>>> Fav(int userid, int productId)
+        {
+           
+            var list = _context.Fav
+                .Where(x => x.UserId == userid)
+                .Where(x => x.ProductId == productId)
+                .ToList();
+
+           
+            return Ok(list);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("favoriteI/{userid}/{productId}/{isFav}")]
+        public async Task<ActionResult<List<FavRequestDto>>> FavI(int userid, int productId,Boolean isFav)
+        {
+            //var favorite = new Fav()
+            //{
+            //    UserId = userid,
+            //    ProductId = productId,
+            //    IsFav = isFav,
+            //};
+            //_context.Fav
+            //    .Where(x => x.UserId == userid)
+            //    .Where(x => x.ProductId == productId)
+            //    .UpdateFromQuery(x => new Fav { IsFav = isFav });
+            //await _context.SaveChangesAsync();
+            var favorite = new Fav()
+            {
+                UserId = userid,
+                ProductId = productId,
+            };
+            if (isFav)
+            {
+                _context.Fav.Add(favorite);
+            }
+            else
+            {
+                _context.Fav
+                    .Where(x => x.UserId == userid)
+                     .Where(x => x.ProductId == productId).DeleteFromQuery();
+            }
+            await _context.SaveChangesAsync();
+
+            return Ok(favorite);
+        }
+        
     }
 }
 

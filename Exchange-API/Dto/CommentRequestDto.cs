@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Exchange_API.Model
+namespace Exchange_API.Dto
 {
     public class CommentRequestDto
     {
