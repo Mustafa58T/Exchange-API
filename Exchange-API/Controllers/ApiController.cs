@@ -166,6 +166,19 @@ namespace Exchange_API.Controllers
             return Ok(Product);
         }
 
+        [AllowAnonymous]
+        [HttpGet("myproductdetail/{userId}")]
+
+
+        public async Task<ActionResult<List<ProductRequestDto>>> MyProduct(int userId)
+        {
+
+            var Product = _context.Product.Where(
+                x => x.UserId == userId)
+                .ToList();
+            
+            return Ok(Product);
+        }
 
         [AllowAnonymous]
         [HttpGet("productimage/{id}")]
